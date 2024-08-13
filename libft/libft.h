@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 13:16:24 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/07/08 13:15:47 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:05:53 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <stdarg.h>
 # include <limits.h>
+# include <sys/wait.h>
 
 /* LIBFT */
 
