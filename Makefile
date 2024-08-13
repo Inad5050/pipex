@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dani <dani@student.42.fr>                  +#+  +:+       +#+         #
+#    By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/07 09:09:40 by dangonz3          #+#    #+#              #
-#    Updated: 2024/08/11 18:59:03 by dani             ###   ########.fr        #
+#    Updated: 2024/08/13 17:56:55 by dangonz3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,13 @@ NAME_BONUS = pipex_bonus
 CC = gcc
 CCFLAGS = -Wall -Wextra -Werror
 
+#colors
 COLOR_GREEN = \033[0;32m
 COLOR_RESET = \033[0m
 
-# sources
+#sources
 SRC_DIR = sources/
-SRC_FILES = main.c utils.c
+SRC_FILES = 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:.c=.o)
 
@@ -29,14 +30,14 @@ SRC_BONUS_FILES =
 SRC_BONUS = $(addprefix $(SRC_BONUS_DIR), $(SRC_BONUS_FILES))
 OBJ_BONUS = $(SRC_BONUS:.c=.o)
 
-# headers
+#headers
 INCLUDE = -I./includes/
 
-# LIBFT
+#LIBFT
 LIBFT_DIR = ./libft
-LIBFT_LIB = $(LIBFT_DIR)/libft.a
+LIBFT = $(LIBFT_DIR)/libft.a
 	
-# program
+#program
 all: $(LIBFT_LIB) $(NAME)
 	@echo "$(COLOR_GREEN)------------ PROCESS FINISHED ------------ $(COLOR_RESET)"
 
@@ -50,14 +51,16 @@ $(LIBFT_LIB):
 	$(CC) $(CCFLAGS) -c $< -o $@ $(INCLUDE)
 	@echo "$(COLOR_GREEN)------------ MESSAGE: $@ COMPILED ------------ $(COLOR_RESET)"
 	
-# bonus
-bonus: $(LIBFT_LIB) $(NAME)
+#bonus
+
+bonus: $(LIBFT_LIB) $(NAME_BONUS)
 	@echo "$(COLOR_GREEN)------------ PROCESS FINISHED ------------ $(COLOR_RESET)"
 
 $(NAME_BONUS): $(OBJ_BONUS)
-	$(CC) $(CCFLAGS) $(OBJ_BONUS) $(LIBFT_LIB) -o $(NAME_BONUS) $(INCLUDE)
+	$(CC) $(CCFLAGS) $(OBJ_BONUS) $(LIBFT_LIB) -o $(NAME) $(INCLUDE)
 
-# additional functions
+#additional
+
 clean:
 	rm -f $(OBJ)
 	rm -f $(OBJ_BONUS)
@@ -68,6 +71,7 @@ fclean:
 	rm -f $(OBJ)
 	rm -f $(OBJ_BONUS)
 	rm -f $(NAME)
+	rm -f $(NAME_BONUS)
 	$(MAKE) -C $(LIBFT_DIR) fclean -s
 	@echo "$(COLOR_GREEN)------------ MESSAGE: CLEANING COMPLETED ------------ $(COLOR_RESET)"
 

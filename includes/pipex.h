@@ -3,28 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/11 18:41:39 by dani              #+#    #+#             */
-/*   Updated: 2024/08/11 18:48:07 by dani             ###   ########.fr       */
+/*   Created: 2024/06/12 13:52:43 by dangonz3          #+#    #+#             */
+/*   Updated: 2024/08/13 18:47:49 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
+# include "../libft/libft.h"
 
-#include "../libft/libft.h"
+//colors
+# define COLOR_RED		"\033[0;31m"
+# define COLOR_GREEN	"\033[0;32m"
+# define COLOR_RESET	"\033[0m"
 
-//main
-void		exec(char *cmd, char **env);
-void		child(char **av, int *p_fd, char **env);
-void		parent(char **av, int *p_fd, char **env);
 
-//utils
-void		exit_handler(int n_exit);
-int			open_file(char *file, int in_or_out);
-void		ft_free_tab(char **tab);
-char		*my_getenv(char *name, char **env);
-char		*get_path(char *cmd, char **env);
 
 #endif
