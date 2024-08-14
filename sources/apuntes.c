@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apuntes.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 18:48:54 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/13 21:07:42 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/08/14 18:12:55 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ that happen at the same time. */
 
 /* que es pid_t
 
-pid_t es un tipo de dato definido en la biblioteca estándar de C, que se utiliza para representar identificadores de procesos 
+pid_t es un tipo de dato definido en la biblioteca estándar de C, que se utiliza para representar 
+identificadores de procesos 
 (PID, por sus siglas en inglés). En sistemas basados en Unix, como Ubuntu, los PIDs son enteros que 
 identifican de manera única a cada proceso en ejecución.
 
@@ -81,11 +82,13 @@ void perror(const char *s);
 /* perror es similar a printf, pero con algunas diferencias clave:
 
 Propósito: perror se utiliza para imprimir un mensaje de error relacionado con la última llamada al sistema o 
-función de biblioteca que falló. El mensaje que imprime incluye el texto que se le pasa como argumento seguido de 
+función de biblioteca que falló. El mensaje que imprime incluye el texto que se le pasa como argumento 
+seguido de 
 una descripción del error que causó la falla.
 
 Salida en stderr: Al igual que fprintf(stderr, ...), perror envía su salida al flujo de error estándar 
-(stderr) en lugar de al flujo de salida estándar (stdout). Esto es útil porque permite que los mensajes de error se 
+(stderr) en lugar de al flujo de salida estándar (stdout). Esto es útil porque permite que los mensajes de 
+error se 
 mantengan separados de la salida normal del programa.
 
 Uso del errno: perror utiliza la variable global errno, que es establecida por las funciones del sistema y 
@@ -198,16 +201,6 @@ La función waitpid en sistemas Unix y Unix-like es utilizada para esperar a que
 Es una de las funciones clave para manejar procesos y su finalización. Aquí está el desglose de la función:
 
 Sintaxis
-pid_t waitpid(pid_t pid, int *wstatus, int options);
-Parámetros
-pid: Especifica qué proceso hijo se debe esperar. Puede tomar varios valores para determinar el comportamiento:
-
-pid > 0: Espera al proceso hijo con el ID de proceso igual a pid.
-pid == 0: Espera a cualquier proceso hijo cuyo ID de grupo de procesos es igual al ID de grupo del proceso que llama.
-pid < -1: Espera a cualquier proceso hijo cuyo ID de grupo de procesos sea igual al valor absoluto de pid.
-pid == -1: Espera a cualquier proceso hijo. Es equivalente a la función wait().
-wstatus: Es un puntero a un entero donde se almacenará el estado de finalización del proceso hijo. 
-Este valor puede ser interpretado usando macros como WIFEXITED, WIFSIGNALED, etc., para determinar cómo terminó el proceso.
 
 options: Modifica el comportamiento de waitpid. Algunas opciones comunes son:
 
