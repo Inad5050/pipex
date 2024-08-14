@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 19:07:24 by dani              #+#    #+#             */
-/*   Updated: 2024/08/14 21:41:52 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/14 22:24:59 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,70 +51,9 @@ int main(int argc, char **argv, char **envp)
 		return (-1);
 	if (!check_fd(argv[2]))
 		return (-1);
-	if (!check_cmd(argv[3], envp))
+	if (!cmd_path(argv[3], envp))
 		return (-1);
-	if (!check_cmd(argv[4], envp))
+	if (!cmd_path(argv[4], envp))
 		return (-1);
-	
-
-
-
-
-
 	return (0);
-}
-
-int 	check_fd(int f) 
-{
-	int		fd;
-	
-	fd = open(f, O_RDONLY);
-	if (fd < 0)
-		return (perror("Open:"), 0);
-	return (1);
-}
-
-int	check_cmd(char *cmd1, char **envp)
-{
-
-	char	*path;
-	char	**dirs;
-	char	*cmd_n;
-	char	*cmd_path;
-	int		i;
-	
-	path = get_path(envp);
-	if (!path)
-		return (perror("Path not found:"), 0);
-	dirs = ft_split(path, ':');
-	if (!dirs)
-		return (perror("Split:"), 0);
-	cmd_n = ft_split(cmd1, ' ');
-	if (!cmd_n)
-		return (perror("Split:"), 0);
-	i = 0;
-	while (dirs[i])
-	{
-		cmd_path = ft_strjoin(cmd_n[0], dirs[i]);
-		if (!cmd_path)
-			return (perror("Ft_strjoin:"), 0);
-		if (access(cmd_path, X_OK) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-char	*get_cmddir(char **envp)
-{
-	int		i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strnstr(envp[i], "PATH=", 5))
-			return (envp[i]);
-		i++;
-	}
-	return (NULL);	
 }

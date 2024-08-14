@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:52:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/13 18:47:49 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/08/14 22:29:24 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 # define COLOR_GREEN	"\033[0;32m"
 # define COLOR_RESET	"\033[0m"
 
-
+//check_input
+int 	check_fd(char *route);
+char	*cmd_path(char *cmd1, char **envp);
+char	**cmd_dir(char **envp);
+char	*try_path(char **dirs, char **cmd_argv);
+void	cmd_path_exit(char *str, char **dirs, char **cmd_argv);
 
 #endif

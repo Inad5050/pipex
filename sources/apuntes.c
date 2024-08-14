@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 18:48:54 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/14 18:12:55 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/14 19:20:30 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -434,3 +434,26 @@ Inside the pipe, everything done goes to one of its ends. printf for ex. won’t
 
 [3] Handle file rights when you open() them. Return error if the file cannot be opened, read or written.
 Check how the shell treats infile and outfile when they do not exist, are not readable, writable etc. (chmod is your best friend).
+
+
+// parsing (somewhere in your code)
+char *PATH_from_envp;
+char **mypaths;
+char **mycmdargs;
+// retrieve the line PATH from envp
+PATH_from_envp = ft_substr(envp ....);
+mypaths = ft_split(PATH_from_envp, ":"); // see section 4 for a
+                                            small note[0]
+mycmdargs = ft_split(ag[2], " ");
+// in your child or parent process
+int  i;
+char *cmd;
+i = -1;
+while (mypaths[++i])
+{
+    cmd = ft_join(mypaths[i], ag[2]); // protect your ft_join
+    execve(cmd, mycmdargs, envp); // if execve succeeds, it exits
+    // perror("Error"); <- add perror to debug
+    free(cmd) // if execve fails, we free and we try a new path
+}
+return (EXIT_FAILURE);
