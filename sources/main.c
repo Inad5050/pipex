@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 19:07:24 by dani              #+#    #+#             */
-/*   Updated: 2024/08/14 22:24:59 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/14 23:13:37 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,37 @@ pid_t	wait(int *wstatus);
 pid_t	waitpid(pid_t pid, int *wstatus, int options);
 int		check_arg(int f1, int f2, char *cmd1, char *cmd2, char **envp);
 
-/* void	pipex(int f1, int f2, char *cmd1, char *cmd2)
+int check_input(int argc, char **argv, char **envp);
+
+int main(int argc, char **argv, char **envp)
 {
-	int   end[2];
+	check_input(argc, argv, envp);
+	if (check_input < 0)
+		return (1);
+	pipex(ft_atoi(argv[1]), ft_atoi(argv[2]), argv[3], argv[4]);
+	return (0);
+}
+
+void	pipex(int f1, int f2, char *cmd1, char *cmd2)
+{
+	int   pipefd[2];
 	int   status;
 	pid_t pid;
 	
-	check_arg(f1, f2, cmd1, cmd2);
-	pipe(end);
+	pipe(pipefd);
 	pid = fork();
 	if (pid < 0)
 		return (perror("Fork: "));
 	if (pid == 0)
-		child_one(f1, cmd1);
-	close(end[0]);
-	close(end[1]);
+		child(f1, cmd1, pipefd[1]);
+	else
+		parent(f2, cmd2, pipefd[0]); 
+	close(pipefd[0]);
+	close(pipefd[1]);
 	waitpid(pid, &status, 0);
-} */
+}
 
-int main(int argc, char **argv, char **envp)
+int check_input(int argc, char **argv, char **envp)
 {
 	if (argc != 5)
 		return (perror("Invalid args"), -1);
@@ -57,3 +69,4 @@ int main(int argc, char **argv, char **envp)
 		return (-1);
 	return (0);
 }
+

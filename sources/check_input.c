@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 22:16:41 by dani              #+#    #+#             */
-/*   Updated: 2024/08/14 22:34:40 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/14 23:03:06 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int 	check_fd(char *route);
 char	*cmd_path(char *cmd1, char **envp);
 char	**cmd_dir(char **envp);
 char	*try_path(char **dirs, char **cmd_argv);
-void	cmd_path_exit(char *str, char **dirs, char **cmd_argv);
+int		cmd_path_exit(char *str, char **dirs, char **cmd_argv);
 
 int 	check_fd(char *route) 
 {
@@ -93,11 +93,11 @@ char	*try_path(char **dirs, char **cmd_argv)
 	return (NULL);
 }
 
-void	cmd_path_exit(char *str, char **dirs, char **cmd_argv)
+int	cmd_path_exit(char *str, char **dirs, char **cmd_argv)
 {
 	int	i;
 
-	i = 0;	
+	i = 0;
 	if (dirs)
 	{
 		while (dirs[i])
@@ -112,5 +112,6 @@ void	cmd_path_exit(char *str, char **dirs, char **cmd_argv)
 		free(cmd_argv);
 	}
 	if (str)
-		perror(str);	
+		perror(str);
+	exit (0);
 }
