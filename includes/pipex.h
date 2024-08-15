@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:52:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/15 04:51:00 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/16 01:11:45 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,32 @@
 # define COLOR_GREEN	"\033[0;32m"
 # define COLOR_RESET	"\033[0m"
 
-//check_input
-int		check_input(int argc, char **argv, char **envp);
+typedef struct s_memory
+{
+	char	**dirs;
+	char	**cmd1_argv;
+	char	**cmd2_argv;
+	char	*cmd1_path;
+	char	*cmd2_path;
+	int		fd1;
+	int		fd2;
+}	t_memory;
 
 //cmd_path
-char	*cmd_path(char *cmd1, char **envp);
+char	**cmd_argv(char *cmd, t_memory *m);
+char	*cmd_path(char **c_argv, t_memory *m, char **envp);
 char	**cmd_dir(char **envp);
-char	*try_path(char **dirs, char **cmd_argv);
-int		cmd_path_exit(char *str, char **dirs, char **cmd_argv);
+char	*try_path(t_memory *m, char **c_argv);
 
 //pipex
-void	pipex(int fd1, int fd2, char **argv, char **envp);
-int		child(int fd1, char *cmd1, int *pipefd, char **envp);
-int		parent(int fd2, char *cmd2, int *pipefd, char **envp);
+void	pipex(t_memory *m, char **envp);
+int		child(int *pipefd, t_memory *m, char **envp);
+int		parent(int *pipefd, t_memory *m, char **envp);
 int		fork_exit(char *str, char *pathname, char **cmd_argv);
+
+//utils
+int		pipex_exit(char *str, t_memory *m);
+void	free_memory(t_memory *m);
+void	free_memory_aux(t_memory *m);
 
 #endif

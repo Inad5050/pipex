@@ -6,95 +6,60 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 04:22:22 by dani              #+#    #+#             */
-/*   Updated: 2024/08/15 04:54:49 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/16 01:11:40 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	pipex(int fd1, int fd2, char **argv, char **envp);
-int		child(int fd1, char *cmd1, int *pipefd, char **envp);
-int		parent(int fd2, char *cmd2, int *pipefd, char **envp);
+void	pipex(t_memory *m, char **envp);
+int		child(int *pipefd, t_memory *m, char **envp);
+int		parent(int *pipefd, t_memory *m, char **envp);
 int		fork_exit(char *str, char *pathname, char **cmd_argv);
 
-void	pipex(int fd1, int fd2, char **argv, char **envp)
+int		pipex_exit(char *str, t_memory *m);
+void	free_memory(t_memory *m);
+
+void	pipex(t_memory *m, char **envp)
 {
 	int		pipefd[2];
 	int		status;
 	pid_t	pid;
 
 	if (pipe(pipefd) < 0)
-		return (perror("Pipe"));
+		pipex_exit("Pipe", m);
 	pid = fork();
 	if (pid < 0)
-		return (perror("Fork"));
+		pipex_exit("Fork", m);
 	if (pid == 0)
-		child(fd1, argv[2], pipefd, envp);
+		child(pipefd, m, envp);
 	else
 	{
 		waitpid(pid, &status, 0);
-		parent(fd2, argv[3], pipefd, envp);
+		parent(pipefd, m, envp);
 	}
 	close(pipefd[0]);
 	close(pipefd[1]);
-	close(fd1);
-	close(fd2);
 }
 
-int	child(int fd1, char *cmd1, int *pipefd, char **envp)
+int	child(int *pipefd, t_memory *m, char **envp)
 {
-	char	*pathname;
-	char	**cmd_argv;
-
-	if (dup2(fd1, STDIN_FILENO) < 0)
-		return (perror("dup2"), 0);
+	if (dup2(m->fd1, STDIN_FILENO) < 0)
+		return (pipex_exit("Dup2 child STDIN", m), 0);
 	if (dup2(pipefd[1], STDOUT_FILENO) < 0)
-		return (perror("dup2"), 0);
-	pathname = cmd_path(cmd1, envp);
-	if (pathname)
-		return (perror("cmd_path"), 0);
-	cmd_argv = ft_split(cmd1, ' ');
-	if (!cmd_argv)
-		return (fork_exit("ft_split", pathname, NULL), 0);
-	if (execve(pathname, cmd_argv, envp) < 0)
-		return (fork_exit("execve", pathname, cmd_argv), 0);
+		return (pipex_exit("Dup2 child STDOUT", m), 0);
+	if (execve(m->cmd1_path, m->cmd1_argv, envp) < 0)
+		return (pipex_exit("Execve child", m), 0);
 	return (1);
 }
 
-int	parent(int fd2, char *cmd2, int *pipefd, char **envp)
+int	parent(int *pipefd, t_memory *m, char **envp)
 {
-	char	*pathname;
-	char	**cmd_argv;
-
 	if (dup2(pipefd[0], STDIN_FILENO) < 0)
-		return (perror("dup2"), 0);
-	if (dup2(fd2, STDOUT_FILENO) < 0)
-		return (perror("dup2"), 0);
-	pathname = cmd_path(cmd2, envp);
-	if (pathname)
-		return (perror("cmd_path"), 0);
-	cmd_argv = ft_split(cmd2, ' ');
-	if (!cmd_argv)
-		return (fork_exit("ft_split", pathname, NULL), 0);
-	if (execve(pathname, cmd_argv, envp) < 0)
-		return (fork_exit("execve", pathname, cmd_argv), 0);
+		return (pipex_exit("Dup2 parent STDIN", m), 0);
+	if (dup2(m->fd2, STDOUT_FILENO) < 0)
+		return (pipex_exit("Dup2 parent STDOUT", m), 0);
+	if (execve(m->cmd1_path, m->cmd2_argv, envp) < 0)
+		return (pipex_exit("Execve parent", m), 0);
 	return (1);
-}
-
-int	fork_exit(char *str, char *pathname, char **cmd_argv)
-{
-	int	i;
-
-	i = 0;
-	if (pathname)
-		free(pathname);
-	if (cmd_argv)
-	{
-		while (cmd_argv[i])
-			free(cmd_argv[i++]);
-		free(cmd_argv);
-	}
-	if (str)
-		perror(str);
-	exit (0);
 }
