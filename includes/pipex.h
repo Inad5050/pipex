@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:52:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/15 04:26:01 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/15 04:51:00 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ char	*try_path(char **dirs, char **cmd_argv);
 int		cmd_path_exit(char *str, char **dirs, char **cmd_argv);
 
 //pipex
-void	pipex(int *fd1, int *fd2, char *cmd1, char *cmd2, char **envp);
-int		child(int *fd1, char *cmd1, int *pipefd, char **envp);
-int		parent(int *fd2, char *cmd2, int *pipefd, char **envp);
+void	pipex(int fd1, int fd2, char **argv, char **envp);
+int		child(int fd1, char *cmd1, int *pipefd, char **envp);
+int		parent(int fd2, char *cmd2, int *pipefd, char **envp);
 int		fork_exit(char *str, char *pathname, char **cmd_argv);
 
 #endif

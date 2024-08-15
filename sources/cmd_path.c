@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 03:24:07 by dani              #+#    #+#             */
-/*   Updated: 2024/08/15 04:25:20 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/15 04:37:28 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*cmd_path(char *cmd1, char **envp)
 	char	**dirs;
 	char	**cmd_argv;
 	char	*cmd_path;
-		
+
 	dirs = NULL;
 	cmd_argv = NULL;
 	dirs = cmd_dir(envp);
@@ -67,7 +67,7 @@ char	*try_path(char **dirs, char **cmd_argv)
 {
 	int		i;
 	char	*cmd_path;
-	
+
 	i = 0;
 	while (dirs[i])
 	{

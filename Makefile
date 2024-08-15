@@ -6,7 +6,7 @@
 #    By: dani <dani@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/07 09:09:40 by dangonz3          #+#    #+#              #
-#    Updated: 2024/08/14 22:45:17 by dani             ###   ########.fr        #
+#    Updated: 2024/08/15 04:49:03 by dani             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ COLOR_RESET = \033[0m
 
 #sources
 SRC_DIR = sources/
-SRC_FILES = main.c check_input.c
+SRC_FILES = cmd_path.c main.c pipex.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:.c=.o)
 
