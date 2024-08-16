@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 04:22:22 by dani              #+#    #+#             */
-/*   Updated: 2024/08/16 20:16:32 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/16 22:44:07 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	pipex(t_pipex *p, int argc)
 	pid_t	pid;
 
 	i = 0;
-	while (i < argc - 3)
+	while (i < argc - 4)
 	{
 		if (pipe(pipefd) < 0)
 			pipex_exit("Pipe", p);
@@ -32,6 +32,7 @@ void	pipex(t_pipex *p, int argc)
 			pipex_exit("Fork", p);
 		if (pid == 0)
 			child(pipefd, p, i);
+		i++;
 	}
 	waitpid(pid, NULL, 0);
 	parent(pipefd, p);
@@ -52,7 +53,7 @@ void	child(int *pipefd, t_pipex *p, int i)
 void	parent(int *pipefd, t_pipex *p)
 {
 	int	i;
-	
+
 	i = p->argc - 4;
 	if (dup2(pipefd[0], STDIN_FILENO) < 0)
 		pipex_exit("Dup2 parent STDIN", p);

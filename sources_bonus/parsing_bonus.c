@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 03:24:07 by dani              #+#    #+#             */
-/*   Updated: 2024/08/16 20:35:27 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/16 22:48:43 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int		parsing(char **argv, int argc, t_pipex *p, char **envp);
 char	**cmd_dir(char **envp);
 int		cmd_argv(char **argv, t_pipex *p);
 char	*cmd_path(char **c_argv, t_pipex *p);
+int		here_doc(char *end, t_pipex *p);
 
 int	parsing(char **argv, int argc, t_pipex *p, char **envp)
 {
@@ -26,10 +27,10 @@ int	parsing(char **argv, int argc, t_pipex *p, char **envp)
 		return (perror("Cannot find directories"), 0);
 	if (cmd_argv(argv, p) == 0)
 		return (perror("Cmd_argv"), 0);
-
-	if (ft_strncmp(argv[1], "here_doc", 8))
-	
-	p->fd_in = open(argv[1], O_RDONLY);
+	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
+		p->fd_in = here_doc(argv[2], p);
+	else
+		p->fd_in = open(argv[1], O_RDONLY);
 	if (p->fd_in < 0)
 		return (perror("Cannot open infile"), 0);
 	p->fd_out = open(argv[argc - 1], O_CREAT | O_TRUNC, 0644);
@@ -69,7 +70,7 @@ int	cmd_argv(char **argv, t_pipex *p)
 	{
 		p->m[0].cmd_argv = ft_split(argv[2 + 1], ' ');
 		if (!p->m[0].cmd_argv)
-			return (pipex_exit("Split cmd_argv", p), NULL);
+			return (pipex_exit("Split cmd_argv", p), 0);
 		p->m[0].cmd_path = cmd_path(p->m[0].cmd_argv, p);
 		if (!p->m[0].cmd_path)
 			return (pipex_exit("Cannot find path", p), 0);
@@ -98,4 +99,22 @@ char	*cmd_path(char **c_argv, t_pipex *p)
 		i++;
 	}
 	return (NULL);
+}
+
+int	here_doc(char *end, t_pipex *p)
+{
+	int		pipefd[2];
+	char	*line;
+
+	if (pipe(pipefd) < 0)
+		pipex_exit("Pipe here_doc", p);
+	line = ft_get_next_line(0);
+	while (line && line != end)
+	{
+		ft_putstr_fd(line, pipefd[0]);
+		free(line);
+		line = ft_get_next_line(0);
+	}
+	p->argc--;
+	return (pipefd[1]);
 }

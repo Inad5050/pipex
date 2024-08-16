@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:52:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/16 20:30:04 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/16 22:45:14 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int		parsing(char **argv, int argc, t_pipex *p, char **envp);
 char	**cmd_dir(char **envp);
 int		cmd_argv(char **argv, t_pipex *p);
 char	*cmd_path(char **c_argv, t_pipex *p);
+int		here_doc(char *end, t_pipex *p);
 
 //pipex_bonus
 void	pipex(t_pipex *p, int argc);

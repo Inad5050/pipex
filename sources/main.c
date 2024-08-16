@@ -6,11 +6,11 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 19:07:24 by dani              #+#    #+#             */
-/*   Updated: 2024/08/16 20:19:40 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/16 22:46:40 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../includes/pipex_bonus.h"
 
 int	main(int argc, char **argv, char **envp)
 {
