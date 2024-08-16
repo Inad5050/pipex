@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:52:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/16 22:47:51 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/16 22:53:40 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,5 @@ void	parent(int *pipefd, t_pipex *p);
 int		pipex_exit(char *str, t_pipex *p);
 void	free_memory(t_pipex *p);
 void	free_memory_aux(t_pipex *p);
-
 
 #endif
