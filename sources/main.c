@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 19:07:24 by dani              #+#    #+#             */
-/*   Updated: 2024/08/16 17:18:23 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/16 20:19:40 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_memory	*m;
+	t_pipex	*p;
 
 	if (argc != 5)
 		return (perror("Invalid args"), 1);
-	m = ft_calloc(1, sizeof(t_memory));
-	if (!m)
-		return (perror("Calloc t_memory"), 1);
-	if (parsing(argv, m, envp) == 0)
+	p = ft_calloc(1, sizeof(t_pipex));
+	if (!p)
+		return (perror("Calloc t_pipex"), 1);
+	p->m = ft_calloc(argc - 3, sizeof(t_memory));
+	if (!p->m)
+		return (pipex_exit("Calloc t_memory", p), 1);
+	if (parsing(argv, argc, p, envp) == 0)
 		return (1);
-	pipex(m);
-	free_memory(m);
+	pipex(p, argc);
+	free_memory(p);
 	return (0);
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*   pipexc                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 04:22:22 by dani              #+#    #+#             */
-/*   Updated: 2024/08/16 20:16:32 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/16 20:18:55 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex_bonus.h"
+#include "../includes/pipex.h"
 
 void	pipex(t_pipex *p, int argc);
 void	child(int *pipefd, t_pipex *p, int i);

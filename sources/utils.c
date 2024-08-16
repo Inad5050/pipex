@@ -6,59 +6,59 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 00:11:17 by dani              #+#    #+#             */
-/*   Updated: 2024/08/16 17:00:26 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/16 20:18:59 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-int		pipex_exit(char *str, t_memory *m);
-void	free_memory(t_memory *m);
-void	free_memory_aux(t_memory *m);
+int		pipex_exit(char *str, t_pipex *p);
+void	free_memory(t_pipex *p);
+void	free_memory_aux(t_pipex *p);
 
-int	pipex_exit(char *str, t_memory *m)
+int	pipex_exit(char *str, t_pipex *p)
 {
-	free_memory(m);
+	free_memory(p);
 	perror(str);
 	exit (EXIT_FAILURE);
 }
 
-void	free_memory(t_memory *m)
+void	free_memory(t_pipex *p)
 {
 	int	i;
 
 	i = 0;
-	if (m->dirs)
+	if (p->dirs)
 	{
-		while (m->dirs[i])
-			free(m->dirs[i++]);
-		free(m->dirs);
+		while (p->dirs[i])
+			free(p->dirs[i++]);
+		free(p->dirs);
 	}
-	i = 0;
-	if (m->cmd1_argv)
-	{
-		while (m->cmd1_argv[i])
-			free(m->cmd1_argv[i++]);
-		free(m->cmd1_argv);
-	}
-	i = 0;
-	if (m->cmd2_argv)
-	{
-		while (m->cmd2_argv[i])
-			free(m->cmd2_argv[i++]);
-		free(m->cmd2_argv);
-	}
-	free_memory_aux(m);
+	if (p->fd_in)
+		close(p->fd_in);
+	if (p->fd_out)
+		close(p->fd_out);
+	if (p->m)
+		free_memory_aux(p);
 }
 
-void	free_memory_aux(t_memory *m)
+void	free_memory_aux(t_pipex *p)
 {
-	if (m->cmd1_path)
-		free(m->cmd1_path);
-	if (m->cmd2_path)
-		free(m->cmd2_path);
-	if (m->fd1)
-		close(m->fd1);
-	if (m->fd2)
-		close(m->fd2);
+	int	i;
+	int	x;
+
+	i = 0;
+	while (i < p->argc - 3)
+	{
+		if (p->m[i].cmd_argv)
+		{
+			x = 0;
+			while (p->m[i].cmd_argv[x])
+				free(p->m[i].cmd_argv[x++]);
+			free(p->m[i].cmd_argv);
+		}
+		if (p->m[i].cmd_path)
+			free(p->m[i].cmd_path);
+		i++;
+	}
 }

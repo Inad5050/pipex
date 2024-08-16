@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:52:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/16 17:26:44 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/16 20:23:23 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,35 @@
 
 typedef struct s_memory
 {
-	char	**envp;
-	char	**dirs;
-	char	**cmd1_argv;
-	char	**cmd2_argv;
-	char	*cmd1_path;
-	char	*cmd2_path;
-	int		fd1;
-	int		fd2;
+	char		**cmd_argv;
+	char		*cmd_path;
 }	t_memory;
 
-//parsing
-int		parsing(char **argv, t_memory *m, char **envp);
+typedef struct s_pipex
+{
+	int			argc;
+	char		**envp;
+	char		**dirs;
+	int			fd_in;
+	int			fd_out;
+	t_memory	*m;
+}	t_pipex;
+
+//parsing_bonus
+int		parsing(char **argv, int argc, t_pipex *p, char **envp);
 char	**cmd_dir(char **envp);
-char	**cmd_argv(char *cmd, t_memory *m);
-char	*cmd_path(char **c_argv, t_memory *m);
+int		cmd_arguments(char **argv, t_pipex *p);
+char	**cmd_argv(char *cmd, t_pipex *p);
+char	*cmd_path(char **c_argv, t_pipex *p);
 
-//pipex
-void	pipex(t_memory *m);
-void	child(int *pipefd, t_memory *m);
-void	parent(int *pipefd, t_memory *m);
+//pipex_bonus
+void	pipex(t_pipex *p, int argc);
+void	child(int *pipefd, t_pipex *p, int i);
+void	parent(int *pipefd, t_pipex *p);
 
-//utils
-int		pipex_exit(char *str, t_memory *m);
-void	free_memory(t_memory *m);
-void	free_memory_aux(t_memory *m);
+//utils_bonus
+int		pipex_exit(char *str, t_pipex *p);
+void	free_memory(t_pipex *p);
+void	free_memory_aux(t_pipex *p);
 
 #endif
