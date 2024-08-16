@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:52:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/16 01:11:45 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/16 17:26:44 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 typedef struct s_memory
 {
+	char	**envp;
 	char	**dirs;
 	char	**cmd1_argv;
 	char	**cmd2_argv;
@@ -30,17 +31,16 @@ typedef struct s_memory
 	int		fd2;
 }	t_memory;
 
-//cmd_path
-char	**cmd_argv(char *cmd, t_memory *m);
-char	*cmd_path(char **c_argv, t_memory *m, char **envp);
+//parsing
+int		parsing(char **argv, t_memory *m, char **envp);
 char	**cmd_dir(char **envp);
-char	*try_path(t_memory *m, char **c_argv);
+char	**cmd_argv(char *cmd, t_memory *m);
+char	*cmd_path(char **c_argv, t_memory *m);
 
 //pipex
-void	pipex(t_memory *m, char **envp);
-int		child(int *pipefd, t_memory *m, char **envp);
-int		parent(int *pipefd, t_memory *m, char **envp);
-int		fork_exit(char *str, char *pathname, char **cmd_argv);
+void	pipex(t_memory *m);
+void	child(int *pipefd, t_memory *m);
+void	parent(int *pipefd, t_memory *m);
 
 //utils
 int		pipex_exit(char *str, t_memory *m);

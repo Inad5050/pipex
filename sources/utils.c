@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 00:11:17 by dani              #+#    #+#             */
-/*   Updated: 2024/08/16 00:55:42 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/16 17:00:26 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	pipex_exit(char *str, t_memory *m)
 {
 	free_memory(m);
 	perror(str);
-	exit (0);
+	exit (EXIT_FAILURE);
 }
 
 void	free_memory(t_memory *m)
