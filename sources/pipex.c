@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 04:22:22 by dani              #+#    #+#             */
-/*   Updated: 2024/08/16 17:22:28 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/16 17:42:06 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,15 @@ void	pipex(t_memory *m)
 	if (pid < 0)
 		pipex_exit("Fork", m);
 	if (pid == 0)
+	{
 		child(pipefd, m);
+		perror("child success\n");
+	}
 	else
 	{
 		waitpid(pid, &status, 0);
 		parent(pipefd, m);
+		perror("parent success\n");
 	}
 	close(pipefd[0]);
 	close(pipefd[1]);
