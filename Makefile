@@ -6,7 +6,7 @@
 #    By: dani <dani@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/07 09:09:40 by dangonz3          #+#    #+#              #
-#    Updated: 2024/08/16 17:48:02 by dani             ###   ########.fr        #
+#    Updated: 2024/08/18 16:14:46 by dani             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,6 @@ fclean:
 
 re: fclean all
 
-rebonus: fclean all bonus
+rebonus: fclean bonus
 
 .PHONY:	all clean fclean re

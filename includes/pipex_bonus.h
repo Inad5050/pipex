@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:52:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/16 22:45:14 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/18 20:16:21 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_memory
 {
 	char		**cmd_argv;
 	char		*cmd_path;
+	int			pipefd[2];
 }	t_memory;
 
 typedef struct s_pipex
@@ -32,6 +33,7 @@ typedef struct s_pipex
 	char		**dirs;
 	int			fd_in;
 	int			fd_out;
+	int			here_bool;
 	t_memory	*m;
 }	t_pipex;
 
@@ -44,8 +46,9 @@ int		here_doc(char *end, t_pipex *p);
 
 //pipex_bonus
 void	pipex(t_pipex *p, int argc);
-void	child(int *pipefd, t_pipex *p, int i);
-void	parent(int *pipefd, t_pipex *p);
+void	get_pipe(t_pipex *p, int i);
+void	child(t_pipex *p, int i);
+void	parent(t_pipex *p, int i);
 
 //utils_bonus
 int		pipex_exit(char *str, t_pipex *p);

@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 00:11:17 by dani              #+#    #+#             */
-/*   Updated: 2024/08/16 19:50:16 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/18 20:14:58 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	free_memory(t_pipex *p)
 		close(p->fd_out);
 	if (p->m)
 		free_memory_aux(p);
+	free(p);
 }
 
 void	free_memory_aux(t_pipex *p)

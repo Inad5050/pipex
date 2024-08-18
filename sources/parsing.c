@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 03:24:07 by dani              #+#    #+#             */
-/*   Updated: 2024/08/16 22:48:33 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/18 16:11:39 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,13 @@ char	*cmd_path(char **c_argv, t_pipex *p)
 		if (!cmd_path)
 			return (NULL);
 		if (access(cmd_path, X_OK) == 0)
+		{
+			free(cmd);
 			return (cmd_path);
+		}
+		free(cmd_path);
 		i++;
 	}
+	free(cmd);
 	return (NULL);
 }

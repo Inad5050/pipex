@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 13:16:24 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/13 21:05:53 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/08/18 15:11:13 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdarg.h>
 # include <limits.h>
 # include <sys/wait.h>
+# include <stdbool.h>
 
 /* LIBFT */
 
