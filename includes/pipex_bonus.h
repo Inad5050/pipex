@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:52:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/18 20:16:21 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/19 00:03:47 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		here_doc(char *end, t_pipex *p);
 
 //pipex_bonus
 void	pipex(t_pipex *p, int argc);
+void	get_pipe(t_pipex *p, int i);
 void	get_pipe(t_pipex *p, int i);
 void	child(t_pipex *p, int i);
 void	parent(t_pipex *p, int i);
