@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:52:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/19 18:10:21 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/08/19 18:38:01 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,14 @@ int		cmd_argv(char **argv, t_pipex *p);
 char	*cmd_path(char **c_argv, t_pipex *p);
 int		here_doc(char *end, t_pipex *p);
 
+void	printeverything (t_pipex *p);
+
 //pipex_bonus
 void	pipex(t_pipex *p);
-void	get_pipes(t_pipex *p, int i);
-void	close_pipes(t_pipex *p);
 void	child(t_pipex *p, int i);
 void	last_child(t_pipex *p, int i);
+void	get_pipes(t_pipex *p, int i);
+void	close_pipes(t_pipex *p);
 
 //utils_bonus
 int		pipex_exit(char *str, t_pipex *p);

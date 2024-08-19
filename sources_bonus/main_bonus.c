@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 19:07:24 by dani              #+#    #+#             */
-/*   Updated: 2024/08/19 17:39:48 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/08/19 18:54:12 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	*p;
 
+	perror("main");
 	if (argc < 5)
 		return (perror("Invalid args"), 1);
 	p = ft_calloc(1, sizeof(t_pipex));
