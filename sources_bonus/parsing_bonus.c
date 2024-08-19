@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 03:24:07 by dani              #+#    #+#             */
-/*   Updated: 2024/08/18 19:46:47 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/19 17:25:17 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	printeverything (t_pipex *p);
 
 int	parsing(char **argv, int argc, t_pipex *p, char **envp)
 {
-	p->argc = argc;
 	p->envp = envp;
 	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
 		p->fd_in = here_doc(argv[2], p);
@@ -164,7 +163,6 @@ int	here_doc(char *end, t_pipex *p)
 	free(s);
 	free(line);
 	close(pipefd[1]);
-	p->argc--;
 	p->here_bool = 1;
 	return (pipefd[0]);
 }

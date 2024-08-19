@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:52:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/19 00:03:47 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/19 18:10:21 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@ typedef struct s_memory
 {
 	char		**cmd_argv;
 	char		*cmd_path;
-	int			pipefd[2];
 }	t_memory;
+
+typedef struct s_pipes
+{
+	int			pipefd[2];
+}	t_pipes;
 
 typedef struct s_pipex
 {
@@ -35,6 +39,7 @@ typedef struct s_pipex
 	int			fd_out;
 	int			here_bool;
 	t_memory	*m;
+	t_pipes		*pi;
 }	t_pipex;
 
 //parsing_bonus
@@ -45,11 +50,11 @@ char	*cmd_path(char **c_argv, t_pipex *p);
 int		here_doc(char *end, t_pipex *p);
 
 //pipex_bonus
-void	pipex(t_pipex *p, int argc);
-void	get_pipe(t_pipex *p, int i);
-void	get_pipe(t_pipex *p, int i);
+void	pipex(t_pipex *p);
+void	get_pipes(t_pipex *p, int i);
+void	close_pipes(t_pipex *p);
 void	child(t_pipex *p, int i);
-void	parent(t_pipex *p, int i);
+void	last_child(t_pipex *p, int i);
 
 //utils_bonus
 int		pipex_exit(char *str, t_pipex *p);
@@ -57,3 +62,5 @@ void	free_memory(t_pipex *p);
 void	free_memory_aux(t_pipex *p);
 
 #endif
+
+/* ./pipex $> ./pipex file1.txt "tr 'A-Z' 'a-z'" "grep ola "wc -l" file2.txt */
