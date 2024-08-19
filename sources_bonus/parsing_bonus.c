@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 03:24:07 by dani              #+#    #+#             */
-/*   Updated: 2024/08/19 19:01:17 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/08/19 23:40:15 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,19 @@ int	parsing(char **argv, int argc, t_pipex *p, char **envp)
 		p->fd_in = here_doc(argv[2], p);
 	else
 		p->fd_in = open(argv[1], O_RDONLY);
-	perror("parsing post here doc");
 	if (p->fd_in < 0)
-		return (perror("Cannot open infile"), 0);
+		return (pipex_exit("Cannot open infile", p), 0);
 	p->fd_out = open(argv[argc - 1], O_CREAT | O_TRUNC, 0777);
 	if (p->fd_out < 0)
-		return (perror("Cannot open outfile"), 0);
-	perror("parsing post open");
+		return (pipex_exit("Cannot open outfile", p), 0);
 	p->dirs = cmd_dir(p->envp);
 	if (!p->dirs)
-		return (perror("Cannot find directories"), 0);
-	perror("parsing post cmd_dir");
+		return (pipex_exit("Cannot find directories", p), 0);
 	if (cmd_argv(argv, p) == 0)
-		return (perror("Cmd_argv"), 0);
-	perror("parsing post cmd_argv");
+		return (pipex_exit("Cmd_argv", p), 0);
 	return (1);
 }
+
 void	printeverything (t_pipex *p)
 {
 	int 	i = 0;
@@ -80,6 +77,11 @@ void	printeverything (t_pipex *p)
 		ft_printf("p->pi[%i].pipefd[1] = %i\n", i, p->pi[i].pipefd[1]);
 		i++;		
 	}
+	if (access("./file1.txt", R_OK) < 0)
+    	ft_printf("PRINTER Input file not accessible");
+	if (access("./file2.txt", W_OK) < 0)
+   		ft_printf("PRINTER Output file not accessible");
+
 }
 
 char	**cmd_dir(char **envp)
@@ -115,11 +117,9 @@ int	cmd_argv(char **argv, t_pipex *p)
 		p->m[i].cmd_argv = ft_split(argv[2 + i], ' ');
 		if (!p->m[i].cmd_argv)
 			return (pipex_exit("Split cmd_argv", p), 0);
-		perror("cmd_argv post split");
 		p->m[i].cmd_path = cmd_path(p->m[i].cmd_argv, p);
 		if (!p->m[i].cmd_path)
 			return (pipex_exit("Cannot find path", p), 0);
-		perror("cmd_argv post cmd_path");
 		i++;
 	}
 	return (1);
@@ -135,25 +135,20 @@ char	*cmd_path(char **cmd_argv, t_pipex *p)
 	cmd = ft_strjoin("/", cmd_argv[0]);
 	if (!cmd)
 		return (NULL);
-	perror("cmd_path post ft_strjoin");
 	while (p->dirs[i])
 	{
 		cmd_path = ft_strjoin(p->dirs[i], cmd);
 		if (!cmd_path)
 			return (NULL);
-		perror("cmd_path while post ft_strjoin");
 		if (access(cmd_path, X_OK) == 0)
 		{
 			free(cmd);
-			perror("cmd_path while IF post free");
 			return (cmd_path);
 		}
 		free(cmd_path);
 		i++;
 	}
-	perror("cmd_path POST while");
 	free(cmd);
-	perror("cmd_path POST while POST free");
 	return (NULL);
 }
 

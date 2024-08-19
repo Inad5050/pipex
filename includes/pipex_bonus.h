@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:52:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/19 18:38:01 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/08/19 23:16:24 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,4 @@ void	free_memory_aux(t_pipex *p);
 
 #endif
 
-/* ./pipex $> ./pipex file1.txt "tr 'A-Z' 'a-z'" "grep ola "wc -l" file2.txt */
+/*./pipex file1.txt "tr 'A-Z' 'a-z'" "grep ola" "wc -l" file2.txt */

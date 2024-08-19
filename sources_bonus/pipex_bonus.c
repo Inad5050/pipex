@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 04:22:22 by dani              #+#    #+#             */
-/*   Updated: 2024/08/19 18:47:59 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/08/19 23:52:59 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ void	pipex(t_pipex *p)
 
 void	child(t_pipex *p, int i)
 {
+	printf("CHILD p->fd_in = %d\n", p->fd_in);
+    printf("CHILD p->fd_out = %d\n", p->fd_out);
+
+	
 	if (!i)
 	{
 		perror("CHILD first 1");
