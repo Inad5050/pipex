@@ -6,7 +6,7 @@
 #    By: dani <dani@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/07 09:09:40 by dangonz3          #+#    #+#              #
-#    Updated: 2024/08/18 16:14:46 by dani             ###   ########.fr        #
+#    Updated: 2024/08/21 20:39:34 by dani             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:.c=.o)
 
 SRC_BONUS_DIR = sources_bonus/
-SRC_BONUS_FILES = main_bonus.c parsing_bonus.c pipex_bonus.c utils_bonus.c
+SRC_BONUS_FILES = main_bonus.c parsing_bonus.c pipex_bonus.c utils_bonus.c here_doc.c printer.c
 SRC_BONUS = $(addprefix $(SRC_BONUS_DIR), $(SRC_BONUS_FILES))
 OBJ_BONUS = $(SRC_BONUS:.c=.o)
 

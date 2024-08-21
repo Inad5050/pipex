@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:52:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/19 23:16:24 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/21 23:21:57 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,36 +32,36 @@ typedef struct s_pipes
 
 typedef struct s_pipex
 {
-	int			argc;
+	int			cmd_n;
 	char		**envp;
 	char		**dirs;
 	int			fd_in;
 	int			fd_out;
-	int			here_bool;
+	int			here_doc;
 	t_memory	*m;
 	t_pipes		*pi;
 }	t_pipex;
 
+//here_doc
+int		here_doc(char *end, t_pipex *p);
+
 //parsing_bonus
-int		parsing(char **argv, int argc, t_pipex *p, char **envp);
+int		parsing(char **argv, int argc, t_pipex *p);
 char	**cmd_dir(char **envp);
 int		cmd_argv(char **argv, t_pipex *p);
 char	*cmd_path(char **c_argv, t_pipex *p);
-int		here_doc(char *end, t_pipex *p);
-
-void	printeverything (t_pipex *p);
+int		get_pipes(t_pipex *p);
 
 //pipex_bonus
 void	pipex(t_pipex *p);
-void	child(t_pipex *p, int i);
-void	last_child(t_pipex *p, int i);
-void	get_pipes(t_pipex *p, int i);
-void	close_pipes(t_pipex *p);
+void	child_select(int i, t_pipex *p);
+void	child_dup(int new_in, int new_out, t_pipex *p);
 
 //utils_bonus
 int		pipex_exit(char *str, t_pipex *p);
 void	free_memory(t_pipex *p);
 void	free_memory_aux(t_pipex *p);
+void	close_pipes(t_pipex *p);
 
 #endif
 

@@ -6,55 +6,60 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 04:22:22 by dani              #+#    #+#             */
-/*   Updated: 2024/08/19 23:52:59 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/21 22:59:29 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex_bonus.h"
 
 void	pipex(t_pipex *p);
-void	child(t_pipex *p, int i);
-void	last_child(t_pipex *p, int i);
-void	get_pipes(t_pipex *p, int i);
-void	close_pipes(t_pipex *p);
+void	child_select(int i, t_pipex *p);
+void	child_dup(int new_in, int new_out, t_pipex *p);
 
 void	pipex(t_pipex *p)
 {
-	int		i;
-	pid_t	pid;
+	int	i;
 
 	i = 0;
-	while (i < p->argc - 4)
-		get_pipes(p, i++);
+	while (i < p->cmd_n)
+		child_select(i++, p);
+	waitpid(-1, NULL, 0);
+}
+
+void	child_select(int i, t_pipex *p)
+{
+	pid_t	pid;
 	
-	printeverything(p);
-	
-	i = 0;
-	while (i < p->argc - 3)
+	pid = fork();
+	if (pid < 0)
+		pipex_exit("Fork", p);
+	if (!pid)
 	{
-		ft_printf("COMIENZA WHILE [%i] \n", i);
-		pid = fork();
-		if (pid < 0)
-			pipex_exit("Fork", p);
-		else if (pid == 0 && i == p->argc - 4)
-			last_child(p, i);
-		else if (pid == 0)
-			child(p, i);
+		if (!i)
+			child_dup(p->fd_in, p->pi[i].pipefd[1], p);
+		else if (i == p->cmd_n - 1)
+			child_dup(p->pi[i - 1].pipefd[0], p->fd_out, p);
 		else
-		{
-			perror("PRE waitpid");
-			waitpid(pid, NULL, 0);
-			perror("POST waitpid");
-		}
-		i++;
+			child_dup(p->pi[i - 1].pipefd[0], p->pi[i].pipefd[1], p);
+		close_pipes(p);
+		if (execve(p->m[i].cmd_path, p->m[i].cmd_argv, p->envp) < 0)
+			pipex_exit("Execve", p);
 	}
 }
 
-void	child(t_pipex *p, int i)
+void	child_dup(int new_in, int new_out, t_pipex *p)
 {
-	printf("CHILD p->fd_in = %d\n", p->fd_in);
-    printf("CHILD p->fd_out = %d\n", p->fd_out);
+	if (dup2(new_in, STDIN_FILENO) < 0)
+		pipex_exit("Dup2 child STDIN", p);
+	if (dup2(new_out, STDOUT_FILENO) < 0)
+		pipex_exit("Dup2 child STDOUT", p);
+}
 
+/* void	child(t_pipex *p, int i)
+{
+	ft_printf("PRINTF comienza CHILD\n");
+
+	printeverything2(p);
 	
 	if (!i)
 	{
@@ -82,15 +87,21 @@ void	child(t_pipex *p, int i)
 
 	perror("POST close_pipes CHILD");
 	
+	printeverything2(p);
+
+	perror("COMIENZA GNL p->pi[i].pipefd[0]");
+	ft_get_next_line(p->pi[i].pipefd[0]);
+	perror("POST GNL p->pi[i].pipefd[0]");
+	
 	if (execve(p->m[i].cmd_path, p->m[i].cmd_argv, p->envp) < 0)
 		pipex_exit("Execve child", p);
 		
-	perror("EXECVE CHILD");
+	perror("EXECVE CHILD completado");
 	
 	exit (EXIT_SUCCESS);
-}
+} */
 
-void	last_child(t_pipex *p, int i)
+/* void	last_child(t_pipex *p, int i)
 {
 	perror("last_child 1");
 	
@@ -105,27 +116,42 @@ void	last_child(t_pipex *p, int i)
 	perror("last_child 2");
 	
 	exit (EXIT_SUCCESS);
-}
+} */
 
-void	get_pipes(t_pipex *p, int i)
+/* void	pipex(t_pipex *p)
 {
-	int	pipefd[2];
-
-	if (pipe(pipefd) < 0)
-		pipex_exit("Get_pipe", p);	
-	p->pi[i].pipefd[0] = pipefd[0];
-	p->pi[i].pipefd[1] = pipefd[1];
-}
-
-void	close_pipes(t_pipex *p)
-{
-	int	i;
-
-	i = 0;
-	while (i < p->argc - 4)
+	p->pid = fork();
+	if (!p->pid)
 	{
-		close(p->pi[i].pipefd[0]);
-		close(p->pi[i].pipefd[1]);
-		i++;
+		
+		if (i > 0)
+		{
+			ft_printf("--------- COMIENZA GNL p->pi[%i - 1].pipefd[0]\n", i);
+			close(p->pi[i - 1].pipefd[1]);
+			while ((line = ft_get_next_line(p->pi[i - 1].pipefd[0])))
+				ft_printf("%s", line);
+			ft_printf("\n--------- POST GNL p->pi[%i - 1].pipefd[0]\n", i);
+		}
+		
+		if (i > 0)
+		{
+			ft_printf("COMIENZA GNL p->pi[%i].pipefd[0]\n", i);
+			ft_get_next_line(p->pi[i].pipefd[0]);
+			ft_printf("POST GNL p->pi[%i].pipefd[0]\n", i);
+		}
+		
+		if (p->pid < 0)
+			pipex_exit("Fork", p);
+		else if (p->pid == 0 && p->i == p->cmd_n - 1)
+			last_child(p, p->i);
+		else if (p->pid == 0)
+			child(p, p->i);
+		else
+		{
+			ft_printf("PRE waitpid PRINTF --------------------\n");
+			waitpid(pid, NULL, 0);
+			ft_printf("POST waitpid PRINTF --------------------\n");
+		}
+		p->i++;
 	}
-}
+} */
