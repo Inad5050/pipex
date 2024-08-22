@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 00:11:17 by dani              #+#    #+#             */
-/*   Updated: 2024/08/21 22:49:41 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/22 17:43:43 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	pipex_exit(char *str, t_pipex *p)
 void	free_memory(t_pipex *p)
 {
 	int	i;
+
 	i = 0;
 	if (p->dirs)
 	{

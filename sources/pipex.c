@@ -1,66 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 04:22:22 by dani              #+#    #+#             */
-/*   Updated: 2024/08/16 22:44:07 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/22 18:01:23 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex_bonus.h"
 
-void	pipex(t_pipex *p, int argc);
-void	child(int *pipefd, t_pipex *p, int i);
-void	parent(int *pipefd, t_pipex *p);
+void	pipex(t_pipex *p);
+void	child_select(int i, t_pipex *p);
+void	child_dup(int new_in, int new_out, t_pipex *p);
 
-void	pipex(t_pipex *p, int argc)
-{
-	int		i;
-	int		pipefd[2];
-	pid_t	pid;
-
-	i = 0;
-	while (i < argc - 4)
-	{
-		if (pipe(pipefd) < 0)
-			pipex_exit("Pipe", p);
-		pid = fork();
-		if (pid < 0)
-			pipex_exit("Fork", p);
-		if (pid == 0)
-			child(pipefd, p, i);
-		i++;
-	}
-	waitpid(pid, NULL, 0);
-	parent(pipefd, p);
-}
-
-void	child(int *pipefd, t_pipex *p, int i)
-{
-	if (dup2(p->fd_in, STDIN_FILENO) < 0)
-		pipex_exit("Dup2 child STDIN", p);
-	if (dup2(pipefd[1], STDOUT_FILENO) < 0)
-		pipex_exit("Dup2 child STDOUT", p);
-	close (pipefd[0]);
-	if (execve(p->m[i].cmd_path, p->m[i].cmd_argv, p->envp) < 0)
-		pipex_exit("Execve child", p);
-	exit (EXIT_SUCCESS);
-}
-
-void	parent(int *pipefd, t_pipex *p)
+void	pipex(t_pipex *p)
 {
 	int	i;
 
-	i = p->argc - 4;
-	if (dup2(pipefd[0], STDIN_FILENO) < 0)
-		pipex_exit("Dup2 parent STDIN", p);
-	if (dup2(p->fd_out, STDOUT_FILENO) < 0)
-		pipex_exit("Dup2 parent STDOUT", p);
-	close (pipefd[1]);
-	if (execve(p->m[i].cmd_path, p->m[i].cmd_argv, p->envp) < 0)
-		pipex_exit("Execve parent", p);
-	exit (EXIT_SUCCESS);
+	i = 0;
+	while (i < p->cmd_n)
+		child_select(i++, p);
+	waitpid(-1, NULL, 0);
+}
+
+void	child_select(int i, t_pipex *p)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid < 0)
+		pipex_exit("Fork", p);
+	if (!pid)
+	{
+		if (!i)
+			child_dup(p->fd_in, p->pi[i].pipefd[1], p);
+		else
+			child_dup(p->pi[i - 1].pipefd[0], p->fd_out, p);
+		close_pipes(p);
+		if (execve(p->m[i].cmd_path, p->m[i].cmd_argv, p->envp) < 0)
+			pipex_exit("Execve", p);
+	}
+}
+
+void	child_dup(int new_in, int new_out, t_pipex *p)
+{
+	if (dup2(new_in, STDIN_FILENO) < 0)
+		pipex_exit("Dup2 child STDIN", p);
+	if (dup2(new_out, STDOUT_FILENO) < 0)
+		pipex_exit("Dup2 child STDOUT", p);
 }

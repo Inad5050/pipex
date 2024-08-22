@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 19:07:24 by dani              #+#    #+#             */
-/*   Updated: 2024/08/21 22:46:20 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/22 17:22:36 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ int	main(int argc, char **argv, char **envp)
 	p->pi = ft_calloc(p->cmd_n - 1, sizeof(t_pipes));
 	if (!p->pi)
 		return (pipex_exit("Calloc t_memory", p), 1);
-	if (parsing(argv, argc, p) == 0)
-		return (1);
+	parsing(argv, argc, p);
 	pipex(p);
 	free_memory(p);
 	return (0);

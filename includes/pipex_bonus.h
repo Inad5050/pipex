@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:52:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/21 23:21:57 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/22 18:05:35 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef struct s_pipex
 int		here_doc(char *end, t_pipex *p);
 
 //parsing_bonus
-int		parsing(char **argv, int argc, t_pipex *p);
-char	**cmd_dir(char **envp);
+void	parsing(char **argv, int argc, t_pipex *p);
+int		cmd_dir(char **envp, t_pipex *p);
 int		cmd_argv(char **argv, t_pipex *p);
 char	*cmd_path(char **c_argv, t_pipex *p);
 int		get_pipes(t_pipex *p);
