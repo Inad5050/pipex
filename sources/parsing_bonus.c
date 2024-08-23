@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parsing_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 03:24:07 by dani              #+#    #+#             */
-/*   Updated: 2024/08/23 18:49:32 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/08/23 20:10:18 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	cmd_argv(char **argv, t_pipex *p)
 		p->m[i].cmd_argv = ft_split(argv[2 + i], ' ');
 		if (!p->m[i].cmd_argv || !p->m[i].cmd_argv[0])
 			return (pipex_exit("Split cmd_argv", p), 0);
+		p->m[i].cmd_path = cmd_path(p->m[i].cmd_argv, p);
 		if (!p->m[i].cmd_path)
 			return (pipex_exit("Cannot find path to cmd", p), 0);
 		i++;
