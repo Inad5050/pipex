@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:52:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/22 18:05:35 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/23 17:24:06 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,15 @@ typedef struct s_pipex
 	int			fd_in;
 	int			fd_out;
 	int			here_doc;
+	pid_t		pid;
 	t_memory	*m;
 	t_pipes		*pi;
 }	t_pipex;
 
 //here_doc
 int		here_doc(char *end, t_pipex *p);
+char	*pi_get_next_line(int fd, char *end_s);
+int		pi_strncmp(const char *str1, const char *str2, size_t n);
 
 //parsing_bonus
 void	parsing(char **argv, int argc, t_pipex *p);

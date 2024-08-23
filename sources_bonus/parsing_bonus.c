@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 03:24:07 by dani              #+#    #+#             */
-/*   Updated: 2024/08/22 18:39:43 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/23 14:09:15 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	parsing(char **argv, int argc, t_pipex *p)
 
 int	cmd_dir(char **envp, t_pipex *p)
 {
-	int		i;
 	char	*path;
+	int		i;
 
 	i = 0;
 	path = NULL;
@@ -86,9 +86,9 @@ int	cmd_argv(char **argv, t_pipex *p)
 
 char	*cmd_path(char **cmd_name, t_pipex *p)
 {
-	int		i;
 	char	*cmd;
 	char	*path;
+	int		i;
 
 	i = 0;
 	cmd = ft_strjoin("/", cmd_name[0]);

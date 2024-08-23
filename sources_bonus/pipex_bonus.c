@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 04:22:22 by dani              #+#    #+#             */
-/*   Updated: 2024/08/22 19:34:11 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/23 17:29:58 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,36 @@ void	pipex(t_pipex *p)
 
 	i = 0;
 	while (i < p->cmd_n)
+	{
 		child_select(i++, p);
+		perror("pre WAIT");
+		waitpid(-1, NULL, 0);
+	}
 	/* waitpid(-1, NULL, 0); */
-	/* ft_printf("pre WAIT \n"); */
-	wait(NULL);
+/* 	perror("pre WAIT");
+	wait(NULL); */
 }
+
+/* void	pipex(t_pipex *p)
+{
+	int	i;
+
+	i = 0;
+	while (i < p->cmd_n)
+		child_select(i++, p);
+	perror("pre WAIT");
+	wait(NULL);
+} */
 
 void	child_select(int i, t_pipex *p)
 {
-	pid_t	pid;
+	/* pid_t	pid; */
 
-	pid = fork();
-	if (pid < 0)
+	p->pid = fork();
+	ft_printf("post fork\n");
+	if (p->pid < 0)
 		pipex_exit("Fork", p);
-	if (!pid)
+	if (!p->pid)
 	{
 		if (!i)
 			child_dup(p->fd_in, p->pi[i].pipefd[1], p);
@@ -47,6 +63,7 @@ void	child_select(int i, t_pipex *p)
 		if (execve(p->m[i].cmd_path, p->m[i].cmd_argv, p->envp) < 0)
 			pipex_exit("Execve", p);
 	}
+	perror("termina child_select");
 }
 
 void	child_dup(int new_in, int new_out, t_pipex *p)
