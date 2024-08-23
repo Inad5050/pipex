@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 04:22:22 by dani              #+#    #+#             */
-/*   Updated: 2024/08/23 17:31:58 by dani             ###   ########.fr       */
+/*   Updated: 2024/08/23 18:13:49 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	child_select(int i, t_pipex *p)
 	pid_t	pid;
 
 	pid = fork();
-	ft_printf("post fork\n");
 	if (pid < 0)
 		pipex_exit("Fork", p);
 	if (!pid)
