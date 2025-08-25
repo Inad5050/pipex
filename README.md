@@ -1,8 +1,8 @@
-\<h1 align="center"\>School 42 Pipex\</h1\>
+<h1 align="center">School 42 Pipex</h1>
 
 This repository contains my implementation of the **pipex** project from the 42 cursus. The goal is to replicate the behavior of shell pipes (`|`) in C, using functions like `fork()`, `pipe()`, `dup2()`, and `execve()`.
 
-\<h2 align="center"\>
+<h2 align="center">
     \<a href="\#about"\>About\</a\>
     \<span\> · \</span\>
     \<a href="\#structure"\>Structure\</a\>
