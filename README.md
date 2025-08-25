@@ -22,7 +22,7 @@ This repository contains my implementation of the **pipex** project from the 42 
 
 This means the program takes the content of `infile` as standard input for `cmd1`, pipes the standard output of `cmd1` to the standard input of `cmd2`, and writes the final standard output to `outfile`.
 
-You can find more details in the [**official project subject**](https://www.google.com/search?q=pipex_subject.pdf).
+You can find more details in the [**official project subject**](pipex_subject.pdf).
 
 ## Structure
 
