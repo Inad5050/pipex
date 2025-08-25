@@ -5,9 +5,9 @@ This repository contains my implementation of the **pipex** project from the 42 
 <h2 align="center">
     <a href="#about">About</a>
     <a href="#structure">Structure</a>
-    <a href="#bonus">  Bonus</a>
     <a href="#requirements">Requirements</a>
     <a href="#instructions">Instructions</a>
+    <a href="#bonus">Bonus</a>
 </h2>
 
 ## About
@@ -44,17 +44,6 @@ The core of the project is the correct management of file descriptors and proces
       * It then executes `cmd2` using `execve()`.
   * **Parent Process**:
       * The parent process waits for both child processes to finish using `waitpid()` before exiting. It's crucial to close the pipe ends in the parent to avoid hanging.
-
-## Bonus
-
-The bonus part extends the functionality of `pipex` to handle more complex scenarios:
-
-  * **Multiple Pipes**: The program can handle an arbitrary number of commands chained together with pipes.
-    `./pipex infile cmd1 | cmd2 | cmd3 ... | cmdn > outfile`
-
-  * **Here Document (`here_doc`)**: The program can simulate input redirection from a "here document".
-    `./pipex here_doc LIMITER cmd1 | cmd2 > outfile`
-    This reads from the standard input until the `LIMITER` string is found on a line by itself, and uses that input for `cmd1`.
 
 ## Requirements
 
@@ -95,3 +84,14 @@ Run the program with four arguments: an input file, two commands (enclosed in qu
 
 This command is equivalent to running the following in a shell:
 `< infile.txt ls -l | wc -l > outfile.txt`
+
+## Bonus
+
+The bonus part extends the functionality of `pipex` to handle more complex scenarios:
+
+  * **Multiple Pipes**: The program can handle an arbitrary number of commands chained together with pipes.
+    `./pipex infile cmd1 | cmd2 | cmd3 ... | cmdn > outfile`
+
+  * **Here Document (`here_doc`)**: The program can simulate input redirection from a "here document".
+    `./pipex here_doc LIMITER cmd1 | cmd2 > outfile`
+    This reads from the standard input until the `LIMITER` string is found on a line by itself, and uses that input for `cmd1`.
