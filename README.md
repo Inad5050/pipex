@@ -4,13 +4,9 @@ This repository contains my implementation of the **pipex** project from the 42 
 
 <h2 align="center">
     <a href="#about">About</a>
-    <span> · </span>
     <a href="#structure">Structure</a>
-    <span> · </span>
-<a href="#bonus">Bonus</a>
-    <span> · </span>
+    <a href="#bonus">Bonus</a>
     <a href="#requirements">Requirements</a>
-    <span> · </span>
     <a href="#instructions">Instructions</a>
 </h2>
 
