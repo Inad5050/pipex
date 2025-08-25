@@ -3,16 +3,16 @@
 This repository contains my implementation of the **pipex** project from the 42 cursus. The goal is to replicate the behavior of shell pipes (`|`) in C, using functions like `fork()`, `pipe()`, `dup2()`, and `execve()`.
 
 <h2 align="center">
-    \<a href="\#about"\>About\</a\>
-    \<span\> · \</span\>
-    \<a href="\#structure"\>Structure\</a\>
-    \<span\> · \</span\>
-\<a href="\#bonus"\>Bonus\</a\>
-    \<span\> · \</span\>
-    \<a href="\#requirements"\>Requirements\</a\>
-    \<span\> · \</span\>
-    \<a href="\#instructions"\>Instructions\</a\>
-\</h2\>
+    <a href="#about">About</a>
+    <span> · </span>
+    <a href="#structure">Structure</a>
+    <span> · </span>
+<a href="#bonus">Bonus</a>
+    <span> · </span>
+    <a href="#requirements">Requirements</a>
+    <span> · </span>
+    <a href="#instructions">Instructions</a>
+</h2>
 
 ## About
 
